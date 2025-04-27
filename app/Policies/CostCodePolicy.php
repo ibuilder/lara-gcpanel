@@ -3,11 +3,11 @@ php
 
 namespace App\Policies;
 
-use App\Models\Deficiency;
+use App\Models\CostCode;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class DeficiencyPolicy
+class CostCodePolicy
 {
     use HandlesAuthorization;
 
@@ -19,19 +19,19 @@ class DeficiencyPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasPermissionTo('view deficiencies');
+        return $user->hasPermissionTo('view cost codes');
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Deficiency  $deficiency
+     * @param  \App\Models\CostCode  $costCode
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Deficiency $deficiency)
+    public function view(User $user, CostCode $costCode)
     {
-        return $user->hasPermissionTo('view deficiencies');
+        return $user->hasPermissionTo('view cost codes');
     }
 
     /**
@@ -42,53 +42,53 @@ class DeficiencyPolicy
      */
     public function create(User $user)
     {
-        return $user->hasPermissionTo('create deficiencies');
+        return $user->hasPermissionTo('create cost codes');
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Deficiency  $deficiency
+     * @param  \App\Models\CostCode  $costCode
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Deficiency $deficiency)
+    public function update(User $user, CostCode $costCode)
     {
-        return $user->hasPermissionTo('edit deficiencies');
+        return $user->hasPermissionTo('edit cost codes');
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Deficiency  $deficiency
+     * @param  \App\Models\CostCode  $costCode
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Deficiency $deficiency)
+    public function delete(User $user, CostCode $costCode)
     {
-        return $user->hasPermissionTo('delete deficiencies');
+        return $user->hasPermissionTo('delete cost codes');
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Deficiency  $deficiency
+     * @param  \App\Models\CostCode  $costCode
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Deficiency $deficiency)
+    public function restore(User $user, CostCode $costCode)
     {
-        return $user->hasPermissionTo('delete deficiencies');
+        return $user->hasPermissionTo('delete cost codes');
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Deficiency  $deficiency
+     * @param  \App\Models\CostCode  $costCode
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Deficiency $deficiency)
+    public function forceDelete(User $user, CostCode $costCode)
     {
         return false;
     }

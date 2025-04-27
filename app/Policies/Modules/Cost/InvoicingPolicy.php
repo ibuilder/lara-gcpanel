@@ -1,13 +1,13 @@
 php
 <?php
 
-namespace App\Policies;
+namespace App\Policies\Modules\Cost;
 
-use App\Models\Deficiency;
+use App\Models\Modules\Cost\Invoicing;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class DeficiencyPolicy
+class InvoicingPolicy
 {
     use HandlesAuthorization;
 
@@ -19,19 +19,19 @@ class DeficiencyPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasPermissionTo('view deficiencies');
+        return $user->hasPermissionTo('view invoicings');
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Deficiency  $deficiency
+     * @param  \App\Models\Modules\Cost\Invoicing  $invoicing
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Deficiency $deficiency)
+    public function view(User $user, Invoicing $invoicing)
     {
-        return $user->hasPermissionTo('view deficiencies');
+        return $user->hasPermissionTo('view invoicings');
     }
 
     /**
@@ -42,53 +42,53 @@ class DeficiencyPolicy
      */
     public function create(User $user)
     {
-        return $user->hasPermissionTo('create deficiencies');
+        return $user->hasPermissionTo('create invoicings');
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Deficiency  $deficiency
+     * @param  \App\Models\Modules\Cost\Invoicing  $invoicing
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Deficiency $deficiency)
+    public function update(User $user, Invoicing $invoicing)
     {
-        return $user->hasPermissionTo('edit deficiencies');
+        return $user->hasPermissionTo('edit invoicings');
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Deficiency  $deficiency
+     * @param  \App\Models\Modules\Cost\Invoicing  $invoicing
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Deficiency $deficiency)
+    public function delete(User $user, Invoicing $invoicing)
     {
-        return $user->hasPermissionTo('delete deficiencies');
+        return $user->hasPermissionTo('delete invoicings');
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Deficiency  $deficiency
+     * @param  \App\Models\Modules\Cost\Invoicing  $invoicing
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Deficiency $deficiency)
+    public function restore(User $user, Invoicing $invoicing)
     {
-        return $user->hasPermissionTo('delete deficiencies');
+        return $user->hasPermissionTo('delete invoicings');
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Deficiency  $deficiency
+     * @param  \App\Models\Modules\Cost\Invoicing  $invoicing
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Deficiency $deficiency)
+    public function forceDelete(User $user, Invoicing $invoicing)
     {
         return false;
     }

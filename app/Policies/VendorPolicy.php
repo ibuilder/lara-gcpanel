@@ -3,11 +3,11 @@ php
 
 namespace App\Policies;
 
-use App\Models\Deficiency;
 use App\Models\User;
+use App\Models\Vendor;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class DeficiencyPolicy
+class VendorPolicy
 {
     use HandlesAuthorization;
 
@@ -19,19 +19,19 @@ class DeficiencyPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasPermissionTo('view deficiencies');
+        return $user->hasPermissionTo('view vendors');
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Deficiency  $deficiency
+     * @param  \App\Models\Vendor  $vendor
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Deficiency $deficiency)
+    public function view(User $user, Vendor $vendor)
     {
-        return $user->hasPermissionTo('view deficiencies');
+        return $user->hasPermissionTo('view vendors');
     }
 
     /**
@@ -42,53 +42,53 @@ class DeficiencyPolicy
      */
     public function create(User $user)
     {
-        return $user->hasPermissionTo('create deficiencies');
+        return $user->hasPermissionTo('create vendors');
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Deficiency  $deficiency
+     * @param  \App\Models\Vendor  $vendor
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Deficiency $deficiency)
+    public function update(User $user, Vendor $vendor)
     {
-        return $user->hasPermissionTo('edit deficiencies');
+        return $user->hasPermissionTo('edit vendors');
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Deficiency  $deficiency
+     * @param  \App\Models\Vendor  $vendor
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Deficiency $deficiency)
+    public function delete(User $user, Vendor $vendor)
     {
-        return $user->hasPermissionTo('delete deficiencies');
+        return $user->hasPermissionTo('delete vendors');
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Deficiency  $deficiency
+     * @param  \App\Models\Vendor  $vendor
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Deficiency $deficiency)
+    public function restore(User $user, Vendor $vendor)
     {
-        return $user->hasPermissionTo('delete deficiencies');
+        return $user->hasPermissionTo('delete vendors');
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Deficiency  $deficiency
+     * @param  \App\Models\Vendor  $vendor
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Deficiency $deficiency)
+    public function forceDelete(User $user, Vendor $vendor)
     {
         return false;
     }

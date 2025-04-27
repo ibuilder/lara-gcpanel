@@ -1,13 +1,13 @@
 php
 <?php
 
-namespace App\Policies;
+namespace App\Policies\Modules\Field;
 
-use App\Models\Deficiency;
+use App\Models\Modules\Field\PhotoLibrary;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class DeficiencyPolicy
+class PhotoLibraryPolicy
 {
     use HandlesAuthorization;
 
@@ -19,19 +19,19 @@ class DeficiencyPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasPermissionTo('view deficiencies');
+        return $user->hasPermissionTo('view photo libraries');
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Deficiency  $deficiency
+     * @param  \App\Models\Modules\Field\PhotoLibrary  $photoLibrary
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Deficiency $deficiency)
+    public function view(User $user, PhotoLibrary $photoLibrary)
     {
-        return $user->hasPermissionTo('view deficiencies');
+        return $user->hasPermissionTo('view photo libraries');
     }
 
     /**
@@ -42,53 +42,53 @@ class DeficiencyPolicy
      */
     public function create(User $user)
     {
-        return $user->hasPermissionTo('create deficiencies');
+        return $user->hasPermissionTo('create photo libraries');
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Deficiency  $deficiency
+     * @param  \App\Models\Modules\Field\PhotoLibrary  $photoLibrary
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Deficiency $deficiency)
+    public function update(User $user, PhotoLibrary $photoLibrary)
     {
-        return $user->hasPermissionTo('edit deficiencies');
+        return $user->hasPermissionTo('edit photo libraries');
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Deficiency  $deficiency
+     * @param  \App\Models\Modules\Field\PhotoLibrary  $photoLibrary
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Deficiency $deficiency)
+    public function delete(User $user, PhotoLibrary $photoLibrary)
     {
-        return $user->hasPermissionTo('delete deficiencies');
+        return $user->hasPermissionTo('delete photo libraries');
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Deficiency  $deficiency
+     * @param  \App\Models\Modules\Field\PhotoLibrary  $photoLibrary
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Deficiency $deficiency)
+    public function restore(User $user, PhotoLibrary $photoLibrary)
     {
-        return $user->hasPermissionTo('delete deficiencies');
+        return $user->hasPermissionTo('delete photo libraries');
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Deficiency  $deficiency
+     * @param  \App\Models\Modules\Field\PhotoLibrary  $photoLibrary
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Deficiency $deficiency)
+    public function forceDelete(User $user, PhotoLibrary $photoLibrary)
     {
         return false;
     }

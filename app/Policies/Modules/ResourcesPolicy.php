@@ -1,13 +1,12 @@
 php
 <?php
 
-namespace App\Policies;
+namespace App\Policies\Modules;
 
-use App\Models\Deficiency;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class DeficiencyPolicy
+class ResourcesPolicy
 {
     use HandlesAuthorization;
 
@@ -19,19 +18,18 @@ class DeficiencyPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasPermissionTo('view deficiencies');
+        return $user->hasPermissionTo('view resources');
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Deficiency  $deficiency
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Deficiency $deficiency)
+    public function view(User $user)
     {
-        return $user->hasPermissionTo('view deficiencies');
+        return $user->hasPermissionTo('view resources');
     }
 
     /**
@@ -42,53 +40,49 @@ class DeficiencyPolicy
      */
     public function create(User $user)
     {
-        return $user->hasPermissionTo('create deficiencies');
+        return $user->hasPermissionTo('create resources');
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Deficiency  $deficiency
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Deficiency $deficiency)
+    public function update(User $user)
     {
-        return $user->hasPermissionTo('edit deficiencies');
+        return $user->hasPermissionTo('edit resources');
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Deficiency  $deficiency
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Deficiency $deficiency)
+    public function delete(User $user)
     {
-        return $user->hasPermissionTo('delete deficiencies');
+        return $user->hasPermissionTo('delete resources');
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Deficiency  $deficiency
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Deficiency $deficiency)
+    public function restore(User $user)
     {
-        return $user->hasPermissionTo('delete deficiencies');
+        return $user->hasPermissionTo('delete resources');
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Deficiency  $deficiency
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Deficiency $deficiency)
+    public function forceDelete(User $user)
     {
         return false;
     }

@@ -1,13 +1,13 @@
 php
 <?php
 
-namespace App\Policies;
+namespace App\Policies\Modules\Cost;
 
-use App\Models\Deficiency;
+use App\Models\Modules\Cost\TMMTicket;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class DeficiencyPolicy
+class TMMTicketPolicy
 {
     use HandlesAuthorization;
 
@@ -19,19 +19,19 @@ class DeficiencyPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasPermissionTo('view deficiencies');
+        return $user->hasPermissionTo('view tmmtickets');
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Deficiency  $deficiency
+     * @param  \App\Models\Modules\Cost\TMMTicket  $tMMTicket
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Deficiency $deficiency)
+    public function view(User $user, TMMTicket $tMMTicket)
     {
-        return $user->hasPermissionTo('view deficiencies');
+        return $user->hasPermissionTo('view tmmtickets');
     }
 
     /**
@@ -42,53 +42,53 @@ class DeficiencyPolicy
      */
     public function create(User $user)
     {
-        return $user->hasPermissionTo('create deficiencies');
+        return $user->hasPermissionTo('create tmmtickets');
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Deficiency  $deficiency
+     * @param  \App\Models\Modules\Cost\TMMTicket  $tMMTicket
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Deficiency $deficiency)
+    public function update(User $user, TMMTicket $tMMTicket)
     {
-        return $user->hasPermissionTo('edit deficiencies');
+        return $user->hasPermissionTo('edit tmmtickets');
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Deficiency  $deficiency
+     * @param  \App\Models\Modules\Cost\TMMTicket  $tMMTicket
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Deficiency $deficiency)
+    public function delete(User $user, TMMTicket $tMMTicket)
     {
-        return $user->hasPermissionTo('delete deficiencies');
+        return $user->hasPermissionTo('delete tmmtickets');
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Deficiency  $deficiency
+     * @param  \App\Models\Modules\Cost\TMMTicket  $tMMTicket
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Deficiency $deficiency)
+    public function restore(User $user, TMMTicket $tMMTicket)
     {
-        return $user->hasPermissionTo('delete deficiencies');
+        return $user->hasPermissionTo('delete tmmtickets');
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Deficiency  $deficiency
+     * @param  \App\Models\Modules\Cost\TMMTicket  $tMMTicket
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Deficiency $deficiency)
+    public function forceDelete(User $user, TMMTicket $tMMTicket)
     {
         return false;
     }

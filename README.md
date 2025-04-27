@@ -1,4 +1,4 @@
-# gcPanel - Construction Management Dashboard
+ok lets s# gcPanel - Construction Management Dashboard
 
 ## Overview
 gcPanel is a modular construction management dashboard designed to facilitate project management through a series of CRUD modules. It allows users to manage various aspects of construction projects, including preconstruction, engineering, field operations, safety, contracts, cost management, BIM, closeout processes, and resource management.
@@ -76,6 +76,9 @@ To create a new module:
 
 ## Roadmap
 gcPanel's development roadmap outlines the path for expanding its functionality and enhancing its capabilities over time. Here are the key milestones we're working towards:
+
+**Completed**
+    - All policies and providers have been created and updated.
 
 1.  **User Authentication and Authorization**: Securely manage user access and permissions.
     -   Implement user registration and login processes.
@@ -170,6 +173,11 @@ gcPanel's development roadmap outlines the path for expanding its functionality 
     -   Comply with data security standards.
 23. **Performance Optimization**: Optimize the system for faster performance and scalability.
     -   Improve system speed and efficiency.
+
+**Next Steps**
+1. Define Permissions, Create Roles, and Assign Permissions
+2. Implement a Core Feature
+3. Create tests for existing and future functionality
     -   Ensure scalability to handle large projects.
     -   Optimize database performance.
 24. **Continuous Improvement and Maintenance**: Regularly update and maintain the system based on user feedback and industry standards.
