@@ -1,0 +1,1 @@
+resources/views/modules/Resources/material_rates/index.blade.php
