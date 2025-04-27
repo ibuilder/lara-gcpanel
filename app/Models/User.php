@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany; // Add this
 use Illuminate\Database\Eloquent\Relations\HasMany; // Add this
 
-
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
@@ -25,7 +24,6 @@ class User extends Authenticatable
         'last_name',
         'email',
         'password',
-        'role_id',
         'company_id', // Add this
     ];
 
@@ -53,14 +51,6 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the role that owns the user.
-     */
-    public function role(): BelongsTo
-    {
-        return $this->belongsTo(Role::class);
-    }
-
-    /**
      * Get the company that owns the user.
      */
     public function company(): BelongsTo
@@ -73,36 +63,16 @@ class User extends Authenticatable
      */
     public function roles(): BelongsToMany // Add this method
     {
-        return $this->belongsToMany(Role::class, 'role_user'); // Assumes a pivot table named 'role_user'
+        return $this->belongsToMany(Role::class, 'role_user');
     }
 
-    /**
-     * Check if the user has a specific role.
-     *
-     * @param string $roleName
-     * @return bool
-     */
-    public function hasRole(string $roleName): bool // Add this method
+    public function hasRole(string $roleName) :bool
     {
-        return $this->roles()->where('name', $roleName)->exists();
+       return $this->roles()->where('name', $roleName)->exists();
     }
 
-    /**
-     * Check if the user has any of the given roles.
-     *
-     * @param array $roles
-     * @return bool
-     */
-    public function hasAnyRole(array $roles): bool // Add this method
-    {
-        return $this->roles()->whereIn('name', $roles)->exists();
-    }
-
-    /**
-     * Get the comments for the user.
-     */
-    public function comments(): HasMany // Add this method
-    {
-        return $this->hasMany(Comment::class);
-    }
+     public function comments() : HasMany
+     {
+         return $this->hasMany(Comment::class);
+     }
 }

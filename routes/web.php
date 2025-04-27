@@ -7,6 +7,8 @@ use App\Http\Controllers\Settings\CompanyController;
 use App\Http\Controllers\Settings\DatabaseController;
 use App\Http\Controllers\Settings\ProjectInfoController;
 use App\Http\Controllers\Settings\UserController;
+use App\Http\Controllers\RoleController;
+
 // Report Controller
 use App\Http\Controllers\ReportController;
 
@@ -186,10 +188,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     }); // End Modules Prefix
 
     // Settings Section (Requires 'administrator' role)
-    Route::middleware(['role:administrator']) // Apply middleware here
+    Route::middleware(['CheckUserRole:admin']) // Apply middleware here
           ->prefix('settings')->name('settings.')
           ->group(function () {
                 Route::get('/', [ProjectInfoController::class, 'index'])->name('index'); // Default settings page
+                Route::resource('roles', RoleController::class)->names('roles');
                 Route::resource('project-info', ProjectInfoController::class)->only(['index', 'store', 'update'])->names('project_info');
                 Route::resource('company-management', CompanyController::class)->names('company_management');
                 Route::resource('user-management', UserController::class)->names('user_management');

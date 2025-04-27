@@ -12,32 +12,20 @@ class CheckUserRole
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     * @param  string|array  $roles  The role(s) required to access the route.
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @param  string  $role
+     * @return mixed
      */
-    public function handle(Request $request, Closure $next, ...$roles): Response
+    public function handle(Request $request, Closure $next, string $role)
     {
-        if (!Auth::check()) { // Not logged in
-            return redirect('login');
+        if (!Auth::check() || !$request->user()->hasRole($role)) {
+            return redirect()->route('dashboard')->with('message', 'Unauthorized Access');
         }
 
-        $user = Auth::user();
+        return $next($request);
 
-        // Ensure roles are passed correctly
-        if (empty($roles)) {
-             // Or handle this scenario as needed, maybe deny access?
-             \Log::warning('No roles specified for CheckUserRole middleware on route: ' . $request->route()->getName());
-             return $next($request); // Or abort(403, 'Access Denied: Role configuration error.');
-        }
-
-        // Allow if user has any of the specified roles
-        if ($user->hasAnyRole($roles)) {
-            return $next($request);
-        }
-
-        // User does not have any of the required roles
-        // You could redirect to a specific 'unauthorized' page or just abort
-        // return redirect('/unauthorized');
-        abort(403, 'Access Denied: You do not have the required permissions.');
+        // User has the required role, proceed.
+        
     }
 }
