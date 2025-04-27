@@ -1,5 +1,7 @@
 php
-@extends('layouts.app')
+--- a/resources/views/modules/Contracts/subcontracts/create.blade.php
++++ b/resources/views/modules/Contracts/subcontracts/create.blade.php
+
 
 @section('content')
     <div class="container">

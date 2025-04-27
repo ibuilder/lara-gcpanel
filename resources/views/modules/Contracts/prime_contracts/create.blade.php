@@ -1,14 +1,24 @@
 @extends('layouts.app')
 
+@section('title', 'Create Prime Contract')
+
 @section('content')
     <div class="container">
-        <h1>Create Prime Contract</h1>
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Create Prime Contract</h1>
 
-        <form action="{{ route('prime_contracts.store') }}" method="POST">
-            @csrf
-            @include('modules.Contracts.prime_contracts._form')
-
-            <button type="submit" class="btn btn-primary">Create</button>
-        </form>
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+                @include('modules.Contracts.prime_contracts._form')
+            </div>
+        </div>
     </div>
 @endsection
