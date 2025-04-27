@@ -4,10 +4,15 @@
 import { createApp } from 'vue';
 import { createRouter, createWebHistory } from 'vue-router';
 
-// Import components
-import Dashboard from '../views/dashboard.blade.php';
-import Login from '../views/auth/login.blade.php';
-import Register from '../views/auth/register.blade.php';
+// Import components - These should likely be .vue files, not .blade.php
+// import Dashboard from '../views/dashboard.blade.php'; // Incorrect
+// import Login from '../views/auth/login.blade.php'; // Incorrect
+// import Register from '../views/auth/register.blade.php'; // Incorrect
+
+// Example if using Vue components:
+// import Dashboard from './components/Dashboard.vue';
+// import Login from './components/Login.vue';
+// import Register from './components/Register.vue';
 
 // Define routes
 const routes = [

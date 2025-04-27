@@ -1,4 +1,3 @@
-php
 <?php
 
 namespace App\Models;
@@ -10,11 +9,16 @@ class Project extends Model
 {
     use HasFactory;
 
+    // Add fillable property if you intend to create/update projects via mass assignment
+    // protected $fillable = ['name', 'number', 'location', ...];
 
-
-
-    public function company()
+    /**
+     * Get the deficiencies for the project.
+     */
+    public function deficiencies()
     {
-        return $this->belongsTo(Company::class);
+        return $this->hasMany(Deficiency::class);
     }
+
+    // Add other relationships (e.g., CostCodes, Submittals, etc.) here
 }

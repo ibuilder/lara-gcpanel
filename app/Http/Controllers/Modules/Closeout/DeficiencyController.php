@@ -1,4 +1,3 @@
-php
 <?php
 
 namespace App\Http\Controllers\Modules\Closeout;
@@ -7,15 +6,23 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Deficiency;
 use App\Models\Project;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use App\Http\Requests\StoreDeficiencyRequest; // Import Form Request
 
 class DeficiencyController extends Controller
 {
+    use AuthorizesRequests;
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $deficiencies = Deficiency::with('project')->get();
+        $this->authorize('viewAny', Deficiency::class);
+
+        // Eager load the 'project' relationship
+        $deficiencies = Deficiency::with('project')->latest()->paginate(15); // Example pagination
+
         return view('modules.closeout.deficiencies.index', compact('deficiencies'));
     }
 
@@ -24,20 +31,20 @@ class DeficiencyController extends Controller
      */
     public function create()
     {
-        $projects = Project::all();
+        // Fetch only id and name (adjust 'name' if your project name column is different)
+        $projects = Project::pluck('name', 'id');
         return view('modules.closeout.deficiencies.create', compact('projects'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreDeficiencyRequest $request) // Use Form Request
     {
-        $request->validate([
-            'project_id' => 'required|exists:projects,id',
-            'description' => 'required',
-            'location' => 'required'
-        ]);        
+        // Authorization and validation are handled by StoreDeficiencyRequest
+
+        // Retrieve validated data
+        $validatedData = $request->validated();
 
         Deficiency::create($validatedData);
 
@@ -49,7 +56,8 @@ class DeficiencyController extends Controller
      */
     public function edit(Deficiency $deficiency)
     {
-        $projects = Project::all();
+        // Fetch only id and name
+        $projects = Project::pluck('name', 'id');
         return view('modules.closeout.deficiencies.edit', compact('deficiency', 'projects'));
     }
 
@@ -58,11 +66,13 @@ class DeficiencyController extends Controller
      */
     public function update(Request $request, Deficiency $deficiency)
     {
-        $request->validate([
+        $this->authorize('update', $deficiency);
+
+        $validatedData = $request->validate([
             'project_id' => 'required|exists:projects,id',
             'description' => 'required',
             'location' => 'required'
-        ]);        
+        ]);
         $deficiency->update($validatedData);
 
         return redirect()->route('modules.closeout.deficiencies.index')->with('success', 'Deficiency updated successfully.');
@@ -73,6 +83,8 @@ class DeficiencyController extends Controller
      */
     public function destroy(Deficiency $deficiency)
     {
+        $this->authorize('delete', $deficiency);
+
         $deficiency->delete();
         return redirect()->route('modules.closeout.deficiencies.index')->with('success', 'Deficiency deleted successfully.');
     }
