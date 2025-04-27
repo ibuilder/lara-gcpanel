@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany; // Add this
 use Illuminate\Database\Eloquent\Relations\HasMany; // Add this
 
+
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
@@ -20,9 +21,11 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'email',
         'password',
+        'role_id',
         'company_id', // Add this
     ];
 
@@ -47,6 +50,14 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * Get the role that owns the user.
+     */
+    public function role(): BelongsTo
+    {
+        return $this->belongsTo(Role::class);
     }
 
     /**
