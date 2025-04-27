@@ -1,30 +1,32 @@
+php
 <?php
 
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Company extends Model
+class Project extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'name',
+        'project_number',
+        'description',
+        'client',
+        'project_manager',
+        'superintendent',
+        'start_date',
+        'end_date',
         'address',
         'city',
         'state',
         'zip',
-        'phone',
-        'website',
     ];
 
-    /**
-     * Get the users associated with the company.
-     */
-    public function users(): HasMany
+    public function company()
     {
-        return $this->hasMany(User::class);
+        return $this->belongsTo(Company::class);
     }
 }
