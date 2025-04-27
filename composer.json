@@ -1,5 +1,5 @@
 {
-  "name": "gcpanel",
+  "name": "ibuilder/lara-gcpanel",
   "description": "A construction management dashboard framework for implementing CRUD modules.",
   "type": "project",
   "require": {
