@@ -35,9 +35,12 @@ use App\Http\Controllers\Modules\Field\PhotoLibraryController;
 use App\Http\Controllers\Modules\Field\ScheduleController;
 use App\Http\Controllers\Modules\Field\ChecklistController;
 use App\Http\Controllers\Modules\Field\PunchlistController;
+use App\Http\Controllers\Modules\Field\ManpowerLogController;
+use App\Http\Controllers\Modules\Field\DailyLogController;
 use App\Http\Controllers\Modules\Field\PullPlanningController;
 // Safety
 use App\Http\Controllers\Modules\Safety\ObservationController;
+use App\Http\Controllers\Modules\Procurement\PurchaseOrderController;
 use App\Http\Controllers\Modules\Safety\PtpController; // PreTask Plan
 use App\Http\Controllers\Modules\Safety\JhaController; // Job Hazard Analysis
 use App\Http\Controllers\Modules\Safety\EmployeeOrientationController;
@@ -63,6 +66,7 @@ use App\Http\Controllers\Modules\BIM\CoordinationIssueController;
 use App\Http\Controllers\Modules\Closeout\OmManualController;
 use App\Http\Controllers\Modules\Closeout\WarrantyController;
 use App\Http\Controllers\Modules\Closeout\AtticStockController;
+use App\Http\Controllers\Modules\Closeout\DeficiencyController;
 // Resources
 use App\Http\Controllers\Modules\Resources\LocationController;
 use App\Http\Controllers\Modules\Resources\CsiDivisionController;
@@ -101,7 +105,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         //Vendor Management
         Route::resource('vendors', VendorController::class)->middleware('CheckUserRole:admin')->names('vendors');
         
-        //Project Management
+        // Project Management
         Route::resource('projects', ProjectController::class)->middleware('CheckUserRole:admin')->names('projects');
 
         // Preconstruction
@@ -115,8 +119,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         // Engineering
         Route::prefix('engineering')->name('engineering.')->group(function () {
             Route::get('/', fn() => view('modules.engineering.index'))->name('index');
-            Route::resource('rfis', RfiController::class)->names('rfis');
-            Route::resource('submittals', SubmittalController::class)->names('submittals');
+            Route::resource('rfis', RfiController::class)->middleware('CheckUserRole:admin');
+            Route::resource('submittals', SubmittalController::class)->middleware('CheckUserRole:admin');
             Route::resource('drawings', DrawingController::class)->names('drawings');
             Route::resource('specifications', SpecificationController::class)->names('specifications');
             Route::resource('file-explorer', FileExplorerController::class)->names('file_explorer'); // Consider if resource is right fit
@@ -124,22 +128,31 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::resource('meeting-agenda', MeetingAgendaController::class)->names('meeting_agenda');
             Route::resource('transmittals', TransmittalController::class)->names('transmittals');
         });
+        
+        // Procurement
+        Route::prefix('procurement')->name('procurement.')->group(function () {
+            Route::get('/', fn() => view('modules.procurement.index'))->name('index');
+            Route::resource('contracts', ContractController::class)->middleware('CheckUserRole:admin');
+            Route::resource('purchase-orders', PurchaseOrderController::class)->middleware('CheckUserRole:admin');
+        });
 
         // Field
         Route::prefix('field')->name('field.')->group(function () {
             Route::get('/', fn() => view('modules.field.index'))->name('index');
-            Route::resource('daily-reports', DailyReportController::class)->names('daily_reports');
+            Route::resource('daily-logs', DailyLogController::class)->middleware('CheckUserRole:admin');
+            Route::resource('manpower-logs', ManpowerLogController::class)->middleware('CheckUserRole:admin');
+            Route::resource('daily-reports', DailyReportController::class)->names('daily_reports'); // will be removed in future
             Route::resource('photo-library', PhotoLibraryController::class)->names('photo_library');
             Route::resource('schedule', ScheduleController::class)->names('schedule');
             Route::resource('checklists', ChecklistController::class)->names('checklists');
-            Route::resource('punchlist', PunchlistController::class)->names('punchlist');
+            Route::resource('punchlist', PunchlistController::class)->middleware('CheckUserRole:admin');
             Route::resource('pull-planning', PullPlanningController::class)->names('pull_planning');
         });
 
         // Safety
         Route::prefix('safety')->name('safety.')->group(function () {
             Route::get('/', fn() => view('modules.safety.index'))->name('index');
-            Route::resource('observations', ObservationController::class)->names('observations');
+            Route::resource('observations', ObservationController::class)->middleware('CheckUserRole:admin');
             Route::resource('ptps', PtpController::class)->names('ptps');
             Route::resource('jhas', JhaController::class)->names('jhas');
             Route::resource('employee-orientations', EmployeeOrientationController::class)->names('employee_orientations');
@@ -163,7 +176,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::resource('invoicing', InvoicingController::class)->names('invoicing');
             Route::resource('direct-costs', DirectCostController::class)->names('direct_costs');
             Route::resource('potential-changes', PotentialChangeController::class)->names('potential_changes');
-            Route::resource('change-orders', ChangeOrderController::class)->names('change_orders');
+            Route::resource('change-orders', ChangeOrderController::class)->middleware('CheckUserRole:admin');
             Route::resource('approval-letters', ApprovalLetterController::class)->names('approval_letters');
             Route::resource('time-materials-tickets', TimeMaterialTicketController::class)->names('time_materials_tickets');
         });
@@ -181,6 +194,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::resource('om-manuals', OmManualController::class)->names('om_manuals');
             Route::resource('warranties', WarrantyController::class)->names('warranties');
             Route::resource('attic-stock', AtticStockController::class)->names('attic_stock');
+            Route::resource('deficiencies', DeficiencyController::class)->middleware('CheckUserRole:admin');
         });
 
          // Resources
