@@ -8,12 +8,12 @@ use Illuminate\Http\Request;
 
 class CompanyController extends Controller
 {
-    /**
+    /** 
      * Display a listing of the resource.
      */
     public function index()
     {
-        $companies = Company::all();
+        $companies = Company::latest()->get();
         return view('companies.index', compact('companies'));
     }
 
@@ -30,14 +30,14 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|max:255',
-            'address' => 'nullable',
-            'city' => 'nullable',
-            'state' => 'nullable',
-            'zip' => 'nullable',
-            'phone' => 'nullable',
-            'website' => 'nullable',
+        $validatedData = $request->validate(
+            [
+                'name' => 'required|string|unique:companies|max:255',
+                'address' => 'required|string',
+                'phone' => 'required|string',
+                'email' => 'required|email|unique:companies',
+                'website' => 'nullable|string',
+            ]
         ]);
 
         Company::create($validatedData);
@@ -58,14 +58,14 @@ class CompanyController extends Controller
      */
     public function update(Request $request, Company $company)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|max:255',
-            'address' => 'nullable',
-            'city' => 'nullable',
-            'state' => 'nullable',
-            'zip' => 'nullable',
-            'phone' => 'nullable',
-            'website' => 'nullable',
+        $validatedData = $request->validate(
+            [
+                'name' => 'required|string|unique:companies,name,' . $company->id . '|max:255',
+                'address' => 'required|string',
+                'phone' => 'required|string',
+                'email' => 'required|email|unique:companies,email,' . $company->id,
+                'website' => 'nullable|string',
+            ]
         ]);
 
         $company->update($validatedData);

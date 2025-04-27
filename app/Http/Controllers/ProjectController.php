@@ -4,12 +4,12 @@ php
 namespace App\Http\Controllers;
 
 use App\Models\Project;
+use App\Models\Company;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class ProjectController extends Controller
 {
-    /**
+    /** 
      * Display a listing of the resource.
      */
     public function index()
@@ -23,32 +23,27 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('projects.create');
+        $companies=Company::all();
+        return view('projects.create',compact('companies'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
+    {        
         $validatedData = $request->validate([
             'name' => 'required',
-            'project_number' => 'required',
-            'description' => 'required',
-            'client' => 'required',
-            'project_manager' => 'required',
-            'superintendent' => 'required',
-            'start_date' => 'required',
-            'end_date' => 'required',
+            'description' => 'nullable',
             'address' => 'required',
-            'city' => 'required',
-            'state' => 'required',
-            'zip' => 'required'
+            'start_date' => 'required|date',
+            'end_date' => 'required|date',
+            'company_id' => 'required|exists:companies,id',
         ]);
 
         Project::create($validatedData);
 
-        return redirect()->route('projects.index')->with('success', 'Project created successfully.');
+        return redirect()->route('modules.projects.index')->with('success', 'Project created successfully.');
     }
 
     /**
@@ -56,32 +51,25 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        return view('projects.edit', compact('project'));
+        $companies=Company::all();
+        return view('projects.edit', compact('project','companies'));
     }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Project $project)
-    {
+    {        
         $validatedData = $request->validate([
             'name' => 'required',
-            'project_number' => 'required',
-            'description' => 'required',
-            'client' => 'required',
-            'project_manager' => 'required',
-            'superintendent' => 'required',
-            'start_date' => 'required',
-            'end_date' => 'required',
+            'description' => 'nullable',
             'address' => 'required',
-            'city' => 'required',
-            'state' => 'required',
-            'zip' => 'required'
+            'start_date' => 'required|date',
+            'end_date' => 'required|date',
+            'company_id' => 'required|exists:companies,id',
         ]);
-
         $project->update($validatedData);
-
-        return redirect()->route('projects.index')->with('success', 'Project updated successfully.');
+        return redirect()->route('settings.projects.index')->with('success', 'Project updated successfully.');
     }
 
     /**
@@ -93,4 +81,3 @@ class ProjectController extends Controller
 
         return redirect()->route('projects.index')->with('success', 'Project deleted successfully.');
     }
-}

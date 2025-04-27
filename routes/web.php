@@ -2,11 +2,14 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProjectController;
+
 // Settings Controllers
 use App\Http\Controllers\Settings\CompanyController;
 use App\Http\Controllers\Settings\DatabaseController;
 use App\Http\Controllers\Settings\ProjectInfoController;
 use App\Http\Controllers\Settings\UserController;
+use App\Http\Controllers\VendorController;
 use App\Http\Controllers\RoleController;
 
 // Report Controller
@@ -95,12 +98,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // --- Module Sections ---
     Route::prefix('modules')->name('modules.')->group(function () {
 
+        //Vendor Management
+        Route::resource('vendors', VendorController::class)->middleware('CheckUserRole:admin')->names('vendors');
+        
+        //Project Management
+        Route::resource('projects', ProjectController::class)->middleware('CheckUserRole:admin')->names('projects');
+
         // Preconstruction
         Route::prefix('preconstruction')->name('preconstruction.')->group(function () {
             Route::get('/', fn() => view('modules.preconstruction.index'))->name('index'); // Section overview
-            Route::resource('qualified-bidders', QualifiedBidderController::class)->names('qualified_bidders');
-            Route::resource('bid-packages', BidPackageController::class)->names('bid_packages');
-            Route::resource('bid-manual', BidManualController::class)->names('bid_manual');
+            Route::resource('qualified-bidders', QualifiedBidderController::class)->middleware('CheckUserRole:admin');
+            Route::resource('bid-packages', BidPackageController::class)->middleware('CheckUserRole:admin');
+            Route::resource('bid-manual', BidManualController::class)->middleware('CheckUserRole:admin');
         });
 
         // Engineering
@@ -192,10 +201,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
           ->prefix('settings')->name('settings.')
           ->group(function () {
                 Route::get('/', [ProjectInfoController::class, 'index'])->name('index'); // Default settings page
+                Route::resource('companies', App\Http\Controllers\CompanyController::class)->names('companies');
                 Route::resource('roles', RoleController::class)->names('roles');
                 Route::resource('project-info', ProjectInfoController::class)->only(['index', 'store', 'update'])->names('project_info');
-                Route::resource('company-management', CompanyController::class)->names('company_management');
-                Route::resource('user-management', UserController::class)->names('user_management');
+                Route::resource('user-management', App\Http\Controllers\Settings\UserController::class)->names('user_management');
                 Route::get('database', [DatabaseController::class, 'index'])->name('database.index');
                 Route::post('database/test', [DatabaseController::class, 'testConnection'])->name('database.test');
           });

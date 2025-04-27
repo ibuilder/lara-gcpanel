@@ -6,15 +6,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Project extends Model
+class BidPackage extends Model
 {
     use HasFactory;
 
-
-
-
-    public function company()
+    public function project()
     {
-        return $this->belongsTo(Company::class);
+        return $this->belongsTo(Project::class);
     }
 }

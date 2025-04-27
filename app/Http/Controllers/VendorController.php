@@ -24,10 +24,10 @@ class VendorController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return View
+     * @return \Illuminate\View\View
      */
-    public function create(): View
-    {
+    public function create()
+    {    
         return view('vendors.create');
     }
 
@@ -39,17 +39,14 @@ class VendorController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'contact_name' => 'nullable|string|max:255',
-            'phone' => 'nullable|string|max:20',
-            'email' => 'nullable|email|max:255',
-            'address' => 'nullable|string|max:255',
-            'city' => 'nullable|string|max:255',
-            'state' => 'nullable|string|max:255',
-            'zip' => 'nullable|string|max:10',
-            'notes' => 'nullable|string',
+         $validatedData = $request->validate([
+            'name' => 'required|string|max:255', 
+            'contact_person' => 'required|string|max:255',
+            'phone' => 'required|string|max:20',
+            'email' => 'required|email|max:255',
+            'address' => 'required|string|max:255',
         ]);
+
 
         Vendor::create($validatedData);
 
@@ -64,7 +61,7 @@ class VendorController extends Controller
      */
     public function edit(Vendor $vendor): View
     {
-        return view('vendors.edit', compact('vendor'));
+        return view('vendors.edit', ['vendor' => $vendor]);
     }
 
     /**
@@ -77,15 +74,11 @@ class VendorController extends Controller
     public function update(Request $request, Vendor $vendor): RedirectResponse
     {
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'contact_name' => 'nullable|string|max:255',
-            'phone' => 'nullable|string|max:20',
-            'email' => 'nullable|email|max:255',
-            'address' => 'nullable|string|max:255',
-            'city' => 'nullable|string|max:255',
-            'state' => 'nullable|string|max:255',
-            'zip' => 'nullable|string|max:10',
-            'notes' => 'nullable|string',
+            'name' => 'required|string|max:255', 
+            'contact_person' => 'required|string|max:255',
+            'phone' => 'required|string|max:20',
+            'email' => 'required|email|max:255',
+            'address' => 'required|string|max:255',
         ]);
 
         $vendor->update($validatedData);
