@@ -1,6 +1,5 @@
-<?php
+<?php // Removed duplicate opening tag
 // filepath: app/Models/ProjectInfo.php
-<?php
 
 namespace App\Models;
 

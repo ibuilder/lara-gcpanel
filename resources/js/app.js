@@ -1,53 +1,19 @@
 // Main JavaScript file for gcPanel application
 
-// Import necessary libraries
-import { createApp } from 'vue';
-import { createRouter, createWebHistory } from 'vue-router';
-
-// Import components - These should likely be .vue files, not .blade.php
-// import Dashboard from '../views/dashboard.blade.php'; // Incorrect
-// import Login from '../views/auth/login.blade.php'; // Incorrect
-// import Register from '../views/auth/register.blade.php'; // Incorrect
-
-// Example if using Vue components:
-// import Dashboard from './components/Dashboard.vue';
-// import Login from './components/Login.vue';
-// import Register from './components/Register.vue';
-
-// Define routes
-const routes = [
-    { path: '/', component: Dashboard },
-    { path: '/login', component: Login },
-    { path: '/register', component: Register },
-];
-
-// Create router instance
-const router = createRouter({
-    history: createWebHistory(),
-    routes,
-});
-
-// Create Vue app instance
-const app = createApp({});
-
-// Use router
-app.use(router);
-
-// Mount the app
-app.mount('#app');
-
 // Function to handle CRUD operations
 async function fetchData(url) {
-    const response = await fetch(url);
+    const response = await fetch(url); // Removed placeholder
     return response.json();
 }
 
 // Function to handle form submissions
 async function submitForm(url, data) {
-    const response = await fetch(url, {
+    const response = await fetch(url, { // Removed placeholder
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            // Add CSRF token header if needed for web routes
+            // 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
         },
         body: JSON.stringify(data),
     });
@@ -56,10 +22,12 @@ async function submitForm(url, data) {
 
 // Function to handle comments
 async function postComment(url, commentData) {
-    const response = await fetch(url, {
+    const response = await fetch(url, { // Removed placeholder
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            // Add CSRF token header if needed
+            // 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
         },
         body: JSON.stringify(commentData),
     });
@@ -68,18 +36,23 @@ async function postComment(url, commentData) {
 
 // Function to export data to PDF
 async function exportToPDF(url) {
-    const response = await fetch(url);
+    const response = await fetch(url); // Removed placeholder
     const blob = await response.blob();
     const urlBlob = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = urlBlob;
-    a.download = 'export.pdf';
+    a.download = 'export.pdf'; // Consider making filename dynamic
     document.body.appendChild(a);
     a.click();
     a.remove();
+    window.URL.revokeObjectURL(urlBlob); // Clean up blob URL
 }
 
 // Event listeners for forms and buttons can be added here
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('gcPanel JS Initialized');
+    // Example: Add listeners to forms with specific classes, etc.
+});
 
-// Export functions for use in other modules
-export { fetchData, submitForm, postComment, exportToPDF };
+// Export functions for use in other modules (if using a module system beyond basic JS)
+// export { fetchData, submitForm, postComment, exportToPDF };

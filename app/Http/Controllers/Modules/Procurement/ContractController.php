@@ -1,4 +1,3 @@
-php
 <?php
 
 namespace App\Http\Controllers\Modules\Procurement;
@@ -81,7 +80,10 @@ class ContractController extends Controller
         return $request->validate([
             'project_id' => 'required|exists:projects,id',
             'vendor' => 'required',
-            'description' => 'required','amount' => 'required|integer','start_date' => 'required|date','end_date' => 'required|date',
+            'description' => 'required',
+            'amount' => 'required|integer',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date',
         ]);
     }
 }
